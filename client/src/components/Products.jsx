@@ -55,7 +55,7 @@ function Products({ cartOpen, setCartOpen }) {
               {products.map((item, index) => (
                 <div
                   key={index}
-                  className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                  className="max-w-sm bg-white border border-gray-200 rounded-lg shadow "
                 >
                   <a href="#">
                     <img
@@ -70,10 +70,10 @@ function Products({ cartOpen, setCartOpen }) {
                         {item.title}
                       </h5>
                     </a>
-                    <p className="mb-3 text-center font-normal uppercase text-gray-700 dark:text-gray-400">
+                    <p className="mb-3 text-center font-normal uppercase text-gray-700 ">
                       {item.description}
                     </p>
-                    <p className="mb-3 text-center font-bold text-gray-700 dark:text-gray-400">
+                    <p className="mb-3 text-center font-bold text-gray-700 ">
                     ₹ {item.price}
                     </p>
                     <div className="flex px-4 py-2 justify-center">

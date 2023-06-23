@@ -107,7 +107,7 @@ function SignUp() {
               <div className="mb-4">
                 <label
                   for="countries"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 text-sm font-medium text-gray-900 "
                 >
                   Select an option
                 </label>
@@ -115,7 +115,7 @@ function SignUp() {
                   id="countries"
                   name="studentClass"
                   onChange={(e) => setStudentClass(e.target.value)}
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 >
                   <option hidden>select class</option>
                   {classes.map((item, key) => (

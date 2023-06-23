@@ -17,6 +17,8 @@ function AddCategory() {
         name,
       });
       if (res.data.success) {
+        setname("");
+        setLoading(false)
         toast.success("Category created successfully", {
           position: "top-center",
           autoClose: 2000,

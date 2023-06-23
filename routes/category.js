@@ -6,7 +6,12 @@ const {
 const categoryController = require("../controllers/categoryController");
 
 router.route("/").get(categoryController.getAllCategories);
-router.post(verifyToken, verifyAdminToken, categoryController.addNewCategory);
+router.post(
+  "/",
+  verifyToken,
+  verifyAdminToken,
+  categoryController.addNewCategory
+);
 
 router.route("/:id").get(categoryController.getCategory);
 router

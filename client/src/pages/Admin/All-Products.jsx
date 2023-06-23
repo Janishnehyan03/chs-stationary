@@ -27,10 +27,13 @@ function AllProducts() {
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <Link
+        to={"/add-product"}
+        class="cursor-pointer bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center float-right my-4"
+      >
+        Add Product
+      </Link>
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <Link to={'/add-product'} class=" cursor-pointer bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center absolute right-2 my-4">
-              Add Product
-            </Link>
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>

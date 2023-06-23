@@ -37,9 +37,10 @@ function AddProduct() {
         "https://api.cloudinary.com/v1_1/mern-chat/image/upload",
         formData
       );
-      const { secure_url } = res.data;
+      const { secure_url } = await res.data;
       setImg(secure_url);
       setLoading(false);
+      return secure_url;
     } catch (error) {
       console.log(error);
     }
@@ -47,13 +48,13 @@ function AddProduct() {
   const addProduct = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await sendToCloudinary(e);
-    if (typeof (img === "string")) {
+    let imageUploaded = await sendToCloudinary(e);
+    if (imageUploaded) {
       try {
         let res = await Axios.post("/products", {
           title,
           price,
-          img,
+          img: imageUploaded,
           description,
           category,
           stock,

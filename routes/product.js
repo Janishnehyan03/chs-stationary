@@ -11,6 +11,7 @@ router
 
 router.post(
   "/",
+  authController.verifyToken,
   authController.verifyAdminToken,
   productController.createNewProduct
 );

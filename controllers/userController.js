@@ -1,14 +1,57 @@
 const Address = require("../models/addressModel");
+const Order = require("../models/orderModel");
 const User = require("../models/userModel");
 
+// exports.getAllUsers = async (req, res) => {
+//   try {
+//     // find all users without admin and password
+//     const users = await User.find();
+//     res.status(200).json({
+//       message: "Users fetched successfully",
+//       results: users.length,
+//       users,
+//     });
+//   } catch (error) {
+//     res.status(400).json({
+//       error,
+//     });
+//   }
+// };
 exports.getAllUsers = async (req, res) => {
   try {
-    // find all users without admin and password
     const users = await User.find();
+
+    const orders = await Order.find()
+      .sort({ createdAt: -1 })
+      .populate("userId")
+      .populate("products.productId");
+
+    const usersWithOrderDetails = users.map((user) => {
+      const userOrders = orders.filter(
+        (order) => order.userId._id.toString() === user._id.toString()
+      );
+
+      const totalPendingAmount = userOrders.reduce(
+        (total, order) => total + order.amount,
+        0
+      );
+      const totalPaidAmount = userOrders.reduce(
+        (total, order) => total + order.paidAmount,
+        0
+      );
+
+      return {
+        _id: user._id,
+        username: user.username,
+        admissionNumber: user.admissionNumber,
+        studentClass: user.studentClass,
+        totalPendingAmount, // Total pending amount for the user
+        totalPaidAmount, // Total paid amount for the user
+      };
+    });
+
     res.status(200).json({
-      message: "Users fetched successfully",
-      results: users.length,
-      users,
+      users: usersWithOrderDetails,
     });
   } catch (error) {
     res.status(400).json({
@@ -16,6 +59,7 @@ exports.getAllUsers = async (req, res) => {
     });
   }
 };
+
 
 //  get one user
 exports.getOneUser = async (req, res) => {

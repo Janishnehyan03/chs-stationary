@@ -4,17 +4,22 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Axios from "../../Axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import OrderUpdateForm from "../../components/OrderUpdateForm";
+import moment from "moment";
 
 function All_users() {
   const [users, setUsers] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
+
   const getAllUsers = async () => {
     let response = await Axios.get("/users");
+    console.log(response.data);
     setUsers(response.data.users);
   };
   useEffect(() => {
@@ -28,6 +33,7 @@ function All_users() {
       >
         Add User
       </Link>
+
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -56,9 +62,27 @@ function All_users() {
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6  py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       View
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6  py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Pending
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6  py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Paid
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Update
                     </th>
                   </tr>
                 </thead>
@@ -69,12 +93,19 @@ function All_users() {
                         <div className="flex items-center">
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">
-                              {person.username}
+                              {person.username} ({person.studentClass}){" "}
+                              {person.admissionNumber}
                             </div>
                           </div>
                         </div>
                       </td>
-
+                      {showUpdateForm && (
+                        <OrderUpdateForm
+                          setShowUpdateForm={setShowUpdateForm}
+                          updateForm={showUpdateForm}
+                          // orderId={person.orderDetails.map((item,key))}
+                        />
+                      )}
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <span
                           className="flex items-center"
@@ -89,17 +120,23 @@ function All_users() {
                           />
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {person._id}
-                      </td>
 
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <Link
-                          to={`/view-user/${person._id}`}
-                          className="text-indigo-600 uppercase hover:text-indigo-900"
-                        >
-                          View
-                        </Link>
+                        <p className="text-green-500 font-bold mr-2">
+                          RS: {person.totalPaidAmount}
+                        </p>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <p className="text-red-500 font-bold mr-2">
+                          RS: {person.totalPendingAmount}
+                        </p>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <FontAwesomeIcon
+                          className="cursor-pointer"
+                          onClick={(e) => setShowUpdateForm(!showUpdateForm)}
+                          icon={faEdit}
+                        />
                       </td>
                     </tr>
                   ))}

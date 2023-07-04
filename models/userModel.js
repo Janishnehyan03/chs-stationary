@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
     password: {
       //  this is not editable
       type: String,
@@ -25,9 +24,11 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
     image: {
       type: String,
+    },
+    amountPaid: {
+      type: Number,
     },
   },
   {

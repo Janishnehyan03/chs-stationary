@@ -8,7 +8,7 @@ exports.getAllOrders = async (req, res) => {
       .sort({
         createdAt: -1,
       })
-      .populate("userId", )
+      .populate("userId")
       .populate("products.productId");
 
     res.status(200).json({
@@ -85,5 +85,28 @@ exports.getMyOrders = async (req, res) => {
     res.status(400).json({
       error,
     });
+  }
+};
+exports.updatePaidAmount = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const paidAmount = req.body.paidAmount;
+
+    // Find the order by orderId and update the paidAmount field
+    const order = await Order.findByIdAndUpdate(
+      orderId,
+      { paidAmount },
+      { new: true }
+    );
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Paid amount updated successfully", order });
+  } catch (error) {
+    res.status(400).json({ error });
   }
 };
